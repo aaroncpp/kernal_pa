@@ -1,0 +1,17 @@
+// example output for running the command
+// sudo sh reinstall_and_test_module.sh
+// in this case the process id (set by OS) are
+// 2148 and 2149
+// NOTE: the timing values you will see for each process
+// may be different in your system (depends on hardware, OS load, etc.)
+
+
+
+== read 1 ==
+2148: 0
+2149: 0
+== read 2 ==
+2148: 260392448
+2149: 260392448
+== read 3 ==
+2149: 3536537088

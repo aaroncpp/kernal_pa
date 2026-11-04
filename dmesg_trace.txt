@@ -1,0 +1,18 @@
+// read from kernel ring buffer
+// due to system artifact (or if you run on VM),
+// you may see there's some jitter in logging 
+// (e.g., logs are not exactly five units apart)
+// this is acceptable
+
+
+[  110.708858] KMLAB MODULE LOADED
+[  115.896020] kmlab-> workqueue -> id: 2148, cputime: 260392448
+[  115.896022] kmlab-> workqueue -> id: 2149, cputime: 260392448
+[  121.014049] kmlab-> workqueue -> id: 2148, cputime: 260392448
+[  121.014052] kmlab-> workqueue -> id: 2149, cputime: 4215752192
+[  126.137199] kmlab-> workqueue -> id: 2149, cputime: 3876144640
+[  131.255272] kmlab-> workqueue -> id: 2149, cputime: 3536537088
+[  136.375888] kmlab-> workqueue -> id: 2149, cputime: 3196929536
+[  141.493356] kmlab-> workqueue -> id: 2149, cputime: 2857321984
+[  146.613962] kmlab-> workqueue -> id: 2149, cputime: 2857321984
+[  227.586959] KMLAB MODULE UNLOADED
