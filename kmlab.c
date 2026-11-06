@@ -7,7 +7,7 @@
 
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Cougs"); // Change with your lastname
+MODULE_AUTHOR("Sanchez"); // Change with your lastname
 MODULE_DESCRIPTION("CPTS360 KM PA");
 
 #define DEBUG 1
@@ -20,6 +20,18 @@ typedef struct {
 } proc_list;
 
 // Global variables as needed ...
+static struct proc_dir_entry *directory;
+static struct proc_dir_entry *status_entry;
+
+static ssize_t device_read(struct file *, char __user *, size_t, loff_t *);
+static ssize_t device_write(struct file *, const char __user *, size_t, loff_t *);
+
+static const struct file_operations file_operations = {
+   .owner = THIS_MODULE;
+   .read = device_read;
+   .write = device_write;
+};
+
 
 
 // kmlab_init - Called when the module is loaded
@@ -30,7 +42,20 @@ int __init kmlab_init(void)
    #endif
    // Insert your code here ...
    
-   
+   pr_info("Hello World!\n");
+
+   directory = proc_mkdir("kmlab", NULL);
+   if (directory == NULL) {
+      pr_err("Failed to create /proc/kmlab directory\n");
+      return -ENOMEM;
+   }
+   status_entry = proc_create("status",0666, directory, &file_operations);
+   if (status_entry == NULL){
+      pr_err("Failed to create /proc/kmlab/status entry\n");
+      proc_remove(directory);
+      return -ENOMEM;
+   }
+
    
    pr_info("KMLAB MODULE LOADED\n");
    return 0;   
@@ -43,8 +68,8 @@ void __exit kmlab_exit(void)
    pr_info("KMLAB MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-   
-   
+   proc_remove(status_entry);
+   proc_remove(directory);
 
    pr_info("KMLAB MODULE UNLOADED\n");
 }
@@ -52,3 +77,4 @@ void __exit kmlab_exit(void)
 // Register init and exit functions
 module_init(kmlab_init);
 module_exit(kmlab_exit);
+
