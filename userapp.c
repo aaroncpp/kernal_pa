@@ -1,15 +1,27 @@
 #include "userapp.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>    // time()
+#include <unistd.h>  // getpid()
 // Additional headers as needed
 
 
 // Register process with kernel module
 void register_process(unsigned int pid)
 {
-    
-     // Insert your code here ...
-   
+    FILE *file = fopen("/proc/kmlab/status", "w");
+
+    if (file == NULL) {
+        perror("fopen");
+        exit(1);
+    }
+
+    fprintf(file, "%u\n", pid);
+
+    if (fclose(file) != 0) {
+        perror("fclose");
+        exit(1);
+    }
 }
 
 int main(int argc, char* argv[])
@@ -32,3 +44,4 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
